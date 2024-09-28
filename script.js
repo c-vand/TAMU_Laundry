@@ -18,3 +18,55 @@ iconClose.addEventListener('click', ()=> {
     wrapper.classList.remove('active-open');
     wrapper.classList.remove('active');
 });
+
+const mongoose = require('mongoose');
+
+const UserSchema = new mongoose.Schema({
+    username: { type: String, required: true, unique: true },
+    email: { type: String, required: true, unique: true },
+    phoneNumber: { type: String, required: true },
+    password: { type: String, required: true },
+});
+
+const User = mongoose.model('User', UserSchema);
+module.exports = User;
+
+
+async function signup() {
+    const email = document.getElementById('signup_email').value;
+    const phoneNumber = document.getElementById('signup_phone').value;
+    const username = document.getElementById('signup_username').value;
+    const password = document.getElementById('signup_password').value;
+
+    const response = await fetch('/signup', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, email, phoneNumber, password }),
+    });
+
+    const result = await response.json();
+    alert(result.message);
+}
+
+async function signin() {
+    const username = document.getElementById('signin_username').value;
+    const password = document.getElementById('signin_password').value;
+
+    const response = await fetch('/signin', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+    });
+
+    const result = await response.json();
+    if (result.token) {
+        localStorage.setItem('token', result.token);
+        alert('Sign in successful');
+    } else {
+        alert(result.message);
+    }
+}
