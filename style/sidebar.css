@@ -1,0 +1,25 @@
+.floor {
+    position: fixed;
+    top: 90px;
+    left: 0;
+    bottom: 0;
+    width: 150px;
+
+    background-color: rgb(194, 194, 194);
+}
+
+.floor-link {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    height: 50px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.floor-link:hover {
+    background-color: gray;
+}
