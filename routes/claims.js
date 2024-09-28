@@ -1,32 +1,66 @@
 const express = require('express');
 const schedule = require('node-schedule');
-const twilio = require('twilio');
 const authenticate = require('../middleware/authMiddleware');
+const nodemailer = require('nodemailer');
+const User = require('../models/User');
+const Machine = require('../models/Machine');
 
 const router = express.Router();
 
-// Twilio setup (replace with actual credentials)
-const accountSid = 'your_account_sid';
-const authToken = 'your_auth_token';
-const twilioClient = twilio(accountSid, authToken);
-const twilioPhoneNumber = 'your_twilio_phone_number';
+// Configure Nodemailer (replace with your SMTP credentials)
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: 'mimict2005@gmail.com',
+        pass: 'M1x2xT5*',
+    },
+});
 
-let appliances = {
-    washer1: null,
-    washer2: null,
-    dryer1: null,
-    dryer2: null,
-};
-
+// Claim appliance endpoint
 router.post('/claim', authenticate, async (req, res) => {
     const { applianceId } = req.body;
-    const currentTime = Date.now();
     const userId = req.user.userId;
+    const currentTime = Date.now();
 
     try {
-        // Your logic for finding user and managing appliance claim status
-        // Using userId, send SMS, and handle claiming logic as explained before
-        // ...
+        // Find the machine
+        const machine = await Machine.findOne({ applianceId });
+
+        if (!machine) {
+            return res.status(404).json({ message: 'Appliance not found' });
+        }
+
+        // Check if machine is available
+        if (machine.status === 'available') {
+            // Update the machine status to claimed
+            const claimExpiration = new Date(currentTime + 60 * 60 * 1000); // 60 minutes later
+            machine.status = 'claimed';
+            machine.claimedBy = userId;
+            machine.claimExpiresAt = claimExpiration;
+            await machine.save();
+            
+            // Schedule email notification
+            schedule.scheduleJob(claimExpiration, () => {
+                const mailOptions = {
+                    from: 'mimict2005@gmail.com',
+                    to: req.user.email, // Use the user's email
+                    subject: 'Laundry Notification',
+                    text: `Your laundry on ${applianceId} is done.`,
+                };
+
+                transporter.sendMail(mailOptions, (error, info) => {
+                    if (error) {
+                        console.error('Failed to send email:', error);
+                    } else {
+                        console.log(`Email sent: ${info.response}`);
+                    }
+                });
+            });
+
+            res.json({ success: true, message: `${applianceId} claimed successfully.` });
+        } else {
+            res.json({ success: false, message: `${applianceId} is currently ${machine.status}.` });
+        }
     } catch (error) {
         res.status(500).json({ message: 'Error processing request' });
     }
