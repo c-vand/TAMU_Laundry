@@ -1,4 +1,4 @@
-
+const Machine = require('../models/Machine');
 
 const wrapper = document.querySelector('.wrapper');
 const loginLink = document.querySelector('.login-link');
@@ -79,13 +79,31 @@ const dryer2 = document.getElementById('dryer2');
 const washer1 = document.getElementById('washer1');
 const washer2 = document.getElementById('washer2');
 
-displayName = document.getElementById('appName');
+
 const status = document.getElementById('status');
 const time = document.getElementById('time');
 
 
-function updateInfo(machine){
-    displayName.innerText = machine;
+
+async function updateInfo(machine) {
+    try {
+        const response = await fetch(`http://localhost:5000/button/${machine}`);
+        const machine = await response.json();
+
+        if (response.ok) {
+            document.getElementById('displayName').innerText = machine.name;
+            document.getElementById('status').innerText = machine.status;
+            if (machine.status == 'available'){
+                document.getElementById('time').innerText = '0';
+            } else {
+                document.getElementById('time').innerText = Math.floor((machine.claimExpiresAt -  Date.now()) / (1000 * 60));
+            }
+        } else {
+            document.getElementById('displayName').innerText = 'Appliance not found';
+        }
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
 }
 
 function useAppliance(){

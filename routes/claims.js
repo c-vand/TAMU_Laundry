@@ -18,13 +18,13 @@ const transporter = nodemailer.createTransport({
 
 // Claim appliance endpoint
 router.post('/claim', authenticate, async (req, res) => {
-    const { applianceId } = req.body;
+    const { name } = req.body;
     const userId = req.user.userId;
     const currentTime = Date.now();
 
     try {
         // Find the machine
-        const machine = await Machine.findOne({ applianceId });
+        const machine = await Machine.findOne({ name });
 
         if (!machine) {
             return res.status(404).json({ message: 'Appliance not found' });
@@ -45,7 +45,7 @@ router.post('/claim', authenticate, async (req, res) => {
                     from: 'mimict2005@gmail.com',
                     to: req.user.email, // Use the user's email
                     subject: 'Laundry Notification',
-                    text: `Your laundry on ${applianceId} is done.`,
+                    text: `Your laundry on ${name} is done.`,
                 };
 
                 transporter.sendMail(mailOptions, (error, info) => {
@@ -57,9 +57,9 @@ router.post('/claim', authenticate, async (req, res) => {
                 });
             });
 
-            res.json({ success: true, message: `${applianceId} claimed successfully.` });
+            res.json({ success: true, message: `${name} claimed successfully.` });
         } else {
-            res.json({ success: false, message: `${applianceId} is currently ${machine.status}.` });
+            res.json({ success: false, message: `${name} is currently ${machine.status}.` });
         }
     } catch (error) {
         res.status(500).json({ message: 'Error processing request' });
