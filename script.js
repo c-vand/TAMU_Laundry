@@ -1,20 +1,4 @@
-// const express = require('express')
-// const mongoose = require('mongoose')
 
-// const app = express()
-
-// mongoose.connect('mongodb://localhost:27017/machineData')
-
-// const UserSchema = mongoose.Schema({
-//     status: String,
-//     time: String
-// })
-
-// const UserModel = mongoose.model("users", UserSchema);
-
-// app.get("/getUsers", (req, res) => {
-//     res.json(UserModel.find());
-// })
 
 const wrapper = document.querySelector('.wrapper');
 const loginLink = document.querySelector('.login-link');
@@ -37,20 +21,6 @@ iconClose.addEventListener('click', ()=> {
     wrapper.classList.remove('active');
 });
 
-
-
-const dryer1 = document.getElementById('dryer1');
-const dryer2 = document.getElementById('dryer2');
-const washer1 = document.getElementById('washer1');
-const washer2 = document.getElementById('washer2');
-
-const displayName = document.getElementById('name');
-const status = document.getElementById('status');
-const time = document.getElementById('time');
-
-
-function updateInfo(machine){
-    displayName.innerText = machine;
 const mongoose = require('mongoose');
 
 const UserSchema = new mongoose.Schema({
@@ -101,4 +71,24 @@ async function signin() {
     } else {
         alert(result.message);
     }
+}
+
+
+const dryer1 = document.getElementById('dryer1');
+const dryer2 = document.getElementById('dryer2');
+const washer1 = document.getElementById('washer1');
+const washer2 = document.getElementById('washer2');
+
+displayName = document.getElementById('appName');
+const status = document.getElementById('status');
+const time = document.getElementById('time');
+
+
+function updateInfo(machine){
+    displayName.innerText = machine;
+}
+
+function useAppliance(){
+    newAppliance = mongoose.model("Appliance", ApplianceSchema);
+    newAppliance.name = displayName;
 }

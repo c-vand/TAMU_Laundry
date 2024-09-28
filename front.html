@@ -84,16 +84,35 @@
         </div>
         <div class="machines">
                 <div class="layout">
-                    <div class="dryer"><img class="machine" src="LaundryIcons/dryer_empty.png"></div>
-                    <div class="washer"><img class="machine" src="LaundryIcons/washer_empty.png"></div>
-                    <div class="dryer"><img class="machine" src="LaundryIcons/dryer_empty.png"></div>
-                    <div class="washer"><img class="machine" src="LaundryIcons/washer_empty.png"></div>
+                    <!-- <div class="dryer"> -->
+                        <button onclick="updateInfo('dryer1')">
+                            <img class="machine" id="dryer1" src="LaundryIcons/dryer_empty.png">
+                        </button>
+                    <!-- </div> -->
+
+                    <!-- <div class="washer"> -->
+                        <button onclick="updateInfo('washer1')">
+                            <img class="machine" id="washer1" src="LaundryIcons/washer_empty.png">
+                        </button>
+                    <!-- </div> -->
+
+                    <!-- <div class="dryer" > -->
+                        <button onclick="updateInfo('dryer2')">
+                            <img class="machine" id="dryer2" src="LaundryIcons/dryer_empty.png">
+                        </button>
+                    <!-- </div> -->
+                    
+                    <!-- <div class="washer"> -->
+                        <button onclick="updateInfo('washer2')">
+                            <img class="machine" id="washer2" src="LaundryIcons/washer_empty.png">
+                        </button>
+                    <!-- </div> -->
                 </div>
                 <div class="interactions">
-                    <div class="machine-name">Washer 4:</div>
-                    <div class="machine-stat">Status: /status/</div>
-                    <div class="machine-stat">Time remaining: /time/</div>
-                    <button type="button" id="use-but">Use Machine</button>
+                    <div class="machine-name" id="appName">Select Machine</div>
+                    <div class="machine-stat" id="status">Status: /status/</div>
+                    <div class="machine-stat" id="time">Time remaining: /time/</div>
+                    <button type="button" id="use-but" onclick="useAppliance()">Use Machine</button>
                 </div>
         </div>
 
