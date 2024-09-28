@@ -1,5 +1,3 @@
-const Machine = require('../models/Machine');
-
 const wrapper = document.querySelector('.wrapper');
 const loginLink = document.querySelector('.login-link');
 const registerLink = document.querySelector('.register-link');
@@ -87,7 +85,7 @@ const time = document.getElementById('time');
 
 async function updateInfo(machine) {
     try {
-        const response = await fetch(`http://localhost:27017/laundryApp/${machine}`);
+        const response = await fetch(`http://localhost:5000/laundryApp/${machine}`);
         const machine = await response.json();
 
         if (response.ok) {
