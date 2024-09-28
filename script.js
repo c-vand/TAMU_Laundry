@@ -87,7 +87,7 @@ const time = document.getElementById('time');
 
 async function updateInfo(machine) {
     try {
-        const response = await fetch(`http://localhost:5000/button/${machine}`);
+        const response = await fetch(`http://localhost:27017/laundryApp/${machine}`);
         const machine = await response.json();
 
         if (response.ok) {
