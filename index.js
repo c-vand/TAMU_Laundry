@@ -16,5 +16,4 @@ app.use('/api', claimRoutes);
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
-
 seedMachines()

@@ -13,7 +13,7 @@ const seedMachines = async () => {
 
     await Machine.insertMany(machines);
     console.log('Database seeded with machines');
-    mongoose.connection.close();
+    //mongoose.connection.close();
 };
 
 module.exports = seedMachines;

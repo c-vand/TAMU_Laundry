@@ -83,9 +83,9 @@ const time = document.getElementById('time');
 
 
 
-async function updateInfo(machine) {
+async function updateInfo(in_m) {
     try {
-        const response = await fetch(`http://localhost:5000/laundryApp/${machine}`);
+        const response = await fetch(`http://localhost:3000/laundryApp/${in_m}`);
         const machine = await response.json();
 
         if (response.ok) {
