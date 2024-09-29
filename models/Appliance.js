@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const ApplianceSchema = new mongoose.Schema({
     name: { type: String, required: true, unique: true },
@@ -9,4 +9,4 @@ const ApplianceSchema = new mongoose.Schema({
 
 const Appliance = mongoose.models.Appliance || mongoose.model("Appliance", ApplianceSchema);
 
-export default Appliance;
+module.exports = Appliance;

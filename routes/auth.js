@@ -1,13 +1,20 @@
+//console.log('wliuehfpiuq')
 const bcrypt = require('bcrypt');
+//console.log('poweryiuqw')
 const jwt = require('jsonwebtoken');
+//console.log('nvvwpoq')
 const User = require('../models/User');
+//console.log('bsiwoue')
 const express = require('express');
+//console.log('zxcvbnm')
 const app = express();
-app.use(express.json());
+//app.use(express.json());
+const router = express.Router();
 
 const JWT_SECRET = 'ballsack';
 
-app.post('/signup', async (req, res) => {
+router.post('/signup', async (req, res) => {
+    console.log("in...");
     const { email, phoneNumber, username, password } = req.body;
 
     try {
@@ -32,7 +39,7 @@ app.post('/signup', async (req, res) => {
     }
 });
 
-app.post('/signin', async (req, res) => {
+router.post('/signin', async (req, res) => {
     const { username, password } = req.body;
 
     try {
@@ -58,3 +65,5 @@ app.post('/signin', async (req, res) => {
         res.status(500).json({ message: 'Error signing in' });
     }
 });
+
+module.exports = router;

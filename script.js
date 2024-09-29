@@ -37,8 +37,8 @@ async function signup() {
     const phoneNumber = document.getElementById('signup_phone').value;
     const username = document.getElementById('signup_username').value;
     const password = document.getElementById('signup_password').value;
-
-    const response = await fetch('/signup', {
+    console.log("fetching...");
+    const response = await fetch('http://localhost:3000/auth/signup', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -54,7 +54,7 @@ async function signin() {
     const username = document.getElementById('signin_username').value;
     const password = document.getElementById('signin_password').value;
 
-    const response = await fetch('/signin', {
+    const response = await fetch('http://localhost:3000/auth/signin', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -85,7 +85,7 @@ const time = document.getElementById('time');
 
 async function updateInfo(in_m) {
     try {
-        const response = await fetch(`http://localhost:3000/laundryApp/${in_m}`);
+        const response = await fetch(`http://localhost:3000/laundryApp/machines/${in_m}`);
         const machine = await response.json();
 
         if (response.ok) {

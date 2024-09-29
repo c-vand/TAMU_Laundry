@@ -1,9 +1,9 @@
 const express = require('express');
 const schedule = require('node-schedule');
-const authenticate = require('../middleware/authMiddleware');
+const authenticate = require('../auth_mid');
 const nodemailer = require('nodemailer');
 const User = require('../models/User');
-const Machine = require('../models/Machine');
+const Machine = require('../models/Appliance');
 
 const router = express.Router();
 

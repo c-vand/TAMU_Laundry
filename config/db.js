@@ -5,7 +5,6 @@ const connectDB = async () => {
         await mongoose.connect('mongodb://localhost:27017/laundryApp', {
             useNewUrlParser: true,
             useUnifiedTopology: true,
-            useCreateIndex: true,
         });
         console.log('MongoDB connected...');
     } catch (error) {
@@ -16,4 +15,4 @@ const connectDB = async () => {
 
 module.exports = connectDB;
 
-mongoose.connectDB();
+//mongoose.connectDB();
